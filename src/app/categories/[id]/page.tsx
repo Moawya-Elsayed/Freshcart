@@ -30,7 +30,7 @@ const [category, products, subcategories]: [
   return (
 
 
-    <div className="container w-[80%] mx-auto mt-12 bg-gray-100 dark:bg-[#020617]">
+    <div className="container w-[95%] sm:w-[90%] md:w-[85%] lg:w-[80%] mx-auto  bg-gray-100 dark:bg-[#020617]">
 
       {/* Category Header */}
       <div className="text-center mb-14">

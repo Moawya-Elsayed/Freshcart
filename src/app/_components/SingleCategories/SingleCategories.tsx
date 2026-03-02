@@ -6,7 +6,7 @@ import { Category } from "@/types/category.type"
   
   {
     return (
-      <div className="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5 px-4 mb-8">
+      <div className="w-1/2  sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5 px-4 mb-8">
         <Link href={`/categories/${category._id}`}>
 
           <div className="group bg-white dark:bg-[#0f172a] rounded-2xl border border-gray-200 dark:border-gray-800 p-5 flex flex-col items-center text-center">

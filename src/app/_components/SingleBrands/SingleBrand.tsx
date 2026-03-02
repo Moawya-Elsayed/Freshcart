@@ -15,8 +15,8 @@ export default function SingleBrand({ brand } : SingleBrandProps){
 
                 <Image
                     src={brand.image || "/placeholder.png"}
-                    width={200}
-                    height={200}
+                    width={300}
+                    height={300}
                     alt={brand.name  || "brand image"}
                     className="rounded-lg transition-transform duration-300 group-hover:scale-105 mx-auto"
                 />

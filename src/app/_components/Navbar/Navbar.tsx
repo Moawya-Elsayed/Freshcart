@@ -8,6 +8,7 @@
   import { useSession, signOut } from "next-auth/react"
   import { CartContext } from "@/context/CartContext"
   import { useTheme } from "next-themes"
+import Image from "next/image"
 
   export default function Navbar() {
 
@@ -74,8 +75,15 @@
           <div className="container mx-auto px-4 lg:px-2 xl:px-0 lg:w-[92%] xl:w-[80%] flex items-center justify-between py-3">
 
             {/* Logo */}
-            <Link href="/" className="flex items-center gap-2 text-xl lg:text-2xl font-bold transition duration-300 hover:scale-110">
-              <FaCartPlus className="shrink-0" />
+            <Link href="/" className="flex items-center gap-2 text-xl lg:text-2xl font-bold cursor-default hover:cursor-default transition duration-300">
+              {/* <FaCartPlus className="shrink-0" /> */}
+              <Image
+                  src="/logo.png"
+                  alt="Fresh Cart Logo"
+                  width={120}
+                  height={120}
+                  className="w-12 h-12 rounded-full object-cover"
+                />
               <span>Fresh Cart</span>
             </Link>
 

@@ -9,12 +9,12 @@
   export default function SingleProduct({ product }: { product: Product }) {
     return (
 
-      <div className="w-full md:w-1/2 lg:w-1/3 xl:w-1/4 2xl:w-1/5 px-3 mb-6">
+      <div className="w-1/2 md:w-1/2 lg:w-1/3 xl:w-1/4 2xl:w-1/5 px-2 mb-6">    
       <Card className="p-0 h-full flex flex-col overflow-hidden rounded-lg shadow-lg bg-white dark:bg-[#0f172a] border dark:border-gray-800">
       <Link href={`/products/${product._id}`} className="group relative">
         <div className="relative w-full aspect-4/3 overflow-hidden">
           <Image    
-            src={product.imageCover}
+            src={product.imageCover}  
             alt={product.title} 
             fill
             sizes="

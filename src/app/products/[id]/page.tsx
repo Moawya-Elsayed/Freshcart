@@ -26,7 +26,7 @@
             return <div className="text-center py-20">Product not found</div>
             }
         return (
-            <div className="container mx-auto my-10 px-4 max-w-6xl min-h-screen bg-gray-100 dark:bg-[#020617] dark:border-t dark:border-white/5">
+            <div className="container w-[95%] sm:w-[90%] md:w-[85%] lg:w-[80%] mx-auto my-10 px-4 max-w-6xl min-h-screen bg-gray-100 dark:bg-[#020617] dark:border-t dark:border-white/5">
                 <div className="flex flex-col lg:flex-row gap-8">
 
                     {/* product image*/}

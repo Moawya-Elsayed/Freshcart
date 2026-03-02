@@ -8,7 +8,8 @@ export async function getUserCart(){
 try{
         const token = await getMyToken()
 
-    if(!token) throw new Error("you are not authenticated")
+    // if(!token) throw new Error("you are not authenticated")
+    if(!token) return null 
 
     const res = await fetch("https://ecommerce.routemisr.com/api/v2/cart" ,{
         method : "GET" ,
@@ -21,8 +22,11 @@ try{
 
     const payload = await res.json() 
     return payload
-} catch { 
-         throw new Error("Failed to fetch cart")
-}
+} 
+
+catch (error) {
+  console.error("Cart Error:", error)
+  throw error
+}       
     
 }

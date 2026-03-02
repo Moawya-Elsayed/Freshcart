@@ -87,7 +87,7 @@ function ResetPasswordContent(){
         <h2 className="text-xl font-bold text-center">
           Reset Password
         </h2>
-
+    
         <input
           type={show ? "text":"password"}
           placeholder="New Password"
