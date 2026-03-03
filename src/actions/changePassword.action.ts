@@ -1,24 +1,30 @@
 "use server"
 
-import { cookies } from "next/headers"
+import { getMyToken } from "@/utilities/getMyToken"
 
-type ChangePasswordPayload = {
- currentPassword: string;
- password: string;
- rePassword: string;
-};
+export type ChangePasswordPayload = {
+  currentPassword: string
+  password: string
+  rePassword: string
+}
 
-export async function changePasswordAction(data:ChangePasswordPayload){
+export async function changePasswordAction(
+  data: ChangePasswordPayload
+) {
 
-  const token = (await cookies()).get("next-auth.session-token")?.value
+  const token = await getMyToken()
+
+  if (!token) {
+    throw new Error("You are not authenticated")
+  }
 
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_API}/users/changeMyPassword`,
     {
-      method:"PUT",
-      headers:{
-        "Content-Type":"application/json",
-        Authorization: token ? `Bearer ${token}` : ""
+      method: "PUT",
+      headers: {
+        token,
+        "Content-Type": "application/json"
       },
       body: JSON.stringify(data)
     }
@@ -26,7 +32,7 @@ export async function changePasswordAction(data:ChangePasswordPayload){
 
   const result = await res.json()
 
-  if(!res.ok){
+  if (!res.ok) {
     throw new Error(result.message || "Change password failed")
   }
 

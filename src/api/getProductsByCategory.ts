@@ -6,7 +6,6 @@ export async function getProductsByCategory(categoryId: string) {
 
   if (!res.ok) {
     console.log(await res.text()) 
-    // throw new Error("Failed to fetch products")
     return [];
   }
 

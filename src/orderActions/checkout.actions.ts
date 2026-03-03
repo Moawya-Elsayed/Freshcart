@@ -1,6 +1,4 @@
         "use server"
-
-        "use server"
         import { checkoutSchemaType } from "@/schema/checkout.schema";
         import { getMyToken } from "@/utilities/getMyToken";
 
