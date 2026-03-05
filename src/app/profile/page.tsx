@@ -1,115 +1,118 @@
-
 "use client"
 
 import { useSession } from "next-auth/react"
-import { useState } from "react"
-import { toast } from "sonner"
-import { updateProfileAction } from "@/actions/updateProfile.action"
-import { UpdateProfilePayload } from "@/types/Profile.types"
+import Link from "next/link"
+import { Mail, Phone } from "lucide-react"
 
-export default function ProfilePage(){
+export default function ProfilePage() {
 
-  const { data: session , update } = useSession()
+  const { data: session } = useSession()
 
-  const [name , setName] = useState(session?.user?.name || "")
-  const [email , setEmail] = useState(session?.user?.email || "")
-  const [phone , setPhone] = useState("")
+  if (!session?.user) return null
 
-  const [loading , setLoading] = useState(false)
+  return (
+    <div className="min-h-screen bg-gray-50 dark:bg-[#020617] pt-24">
 
-  const phoneRegex = /^01[0125][0-9]{8}$/
+      <div className="w-full max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
 
-  if(phone && !phoneRegex.test(phone)){
-  toast.error("Invalid phone number", {
-    duration:2000 ,
-    position:"top-center"
-  })
-  return
-  }
+        <div className="bg-white dark:bg-[#0f172a] 
+        rounded-3xl shadow-2xl p-6 sm:p-8 md:p-10 border dark:border-gray-800">
 
-  if(name.length < 3){
-  toast.error("Name must be at least 3 characters", {
-    duration:2000 ,
-    position:"top-center"
-  })
-  return
-  }
-  async function handleSubmit(e:React.FormEvent){
-    e.preventDefault()
+          {/* Header */}
 
-    try{
+          <div className="flex flex-col sm:flex-row items-center sm:items-start gap-6 mb-10 text-center sm:text-left">
+            <div className="w-16 h-16 sm:w-20 sm:h-20 text-2xl sm:text-3xl rounded-full 
+            bg-emerald-600 flex items-center 
+            justify-center text-white font-bold">
 
-      setLoading(true)
-       const payload: UpdateProfilePayload = {
-      name,
-      email,
-      phone
-    } 
+              {session.user.name?.charAt(0)}
+            </div>
 
-    await updateProfileAction(payload) ; 
+            <div>
+              <h1 className="text-2xl sm:text-3xl font-bold break-words">
+                {session.user.name}
+              </h1>
+              <p className="text-gray-500">
+                {session.user.role}
+              </p>
+            </div>
 
-      toast.success("Profile updated" , {
-        duration:2000 , 
-        position:"top-center"
-      })  
+          </div>
 
-      await update()
+          {/* Info */}
+          <div className="grid sm:grid-cols-1 md:grid-cols-2  gap-6">
 
-    }catch(err){
-    const message =
-      err instanceof Error ? err.message : "Something went wrong"
+            <div 
+            className="
+              flex items-center gap-3 sm:gap-4
+              p-3 sm:p-4
+              bg-gray-50 dark:bg-gray-800
+              rounded-xl
+              text-sm sm:text-base
+              break-all
+              " > 
+              <Mail />
+              {session.user.email}
+            </div>
 
-    toast.error(message,{
-      duration:2000,
-      position:"top-center"
-    })
-  }
+            <div className="flex items-center gap-4 p-4 
+            bg-gray-50 dark:bg-gray-800 rounded-xl">
+              <Phone />
+              {session.user.phone || "No phone added"}
+            </div>
 
-    setLoading(false)
-  }
+          </div>
 
-  return(
-    <div className="min-h-screen bg-gray-100 dark:bg-[#020617] p-10">
+          {/* Buttons */}
 
-      <form
-        onSubmit={handleSubmit}
-        className="max-w-2xl mx-auto bg-white dark:bg-[#0f172a] p-8 rounded-2xl shadow-xl space-y-4"
-      >
+          <div className="mt-10 flex flex-col sm:flex-row gap-4">
 
-        <h1 className="text-2xl font-bold mb-6">
-          Update Profile
-        </h1>
+            {/* Primary Button */}
+            <Link
+              href="/profile/edit"
+              className="
+                w-full text-center
+                bg-emerald-600 text-white
+                px-6 py-3 sm:py-4 rounded-xl
+                font-semibold text-base sm:text-lg
+                shadow-md
+                hover:bg-emerald-700
+                hover:scale-[1.02]
+                transition-all duration-300   
+                              " 
+            >
+              Edit Profile
+            </Link>
 
-        <input
-          className="w-full border p-3 rounded-lg"
-          placeholder="Name"
-          value={name}
-          onChange={e=>setName(e.target.value)}
-        />
 
-        <input
-          className="w-full border p-3 rounded-lg"
-          placeholder="Email"
-          value={email}
-          onChange={e=>setEmail(e.target.value)}
-        />
+                  {/* Secondary Button */}
+              <Link
+                href="/changePassword"
+                className="
+                  w-full text-center
+                  border border-emerald-600
+                  text-emerald-600
+                  dark:border-emerald-400
+                  dark:text-emerald-400
+                  px-6 py-3 sm:py-4
+                  rounded-xl
+                  font-medium
+                  hover:bg-emerald-50
+                  dark:hover:bg-emerald-950
+                  hover:scale-[1.01]
+                  transition-all duration-300
+                  flex items-center justify-center
+                "
+              >
+                Change Password
+              </Link>
 
-        <input
-          className="w-full border p-3 rounded-lg"
-          placeholder="Phone"
-          value={phone}
-          onChange={e=>setPhone(e.target.value)}
-        />
+          </div>
 
-        <button
-          disabled={loading}
-          className="w-full bg-emerald-600 text-white p-3 rounded-lg"
-        >
-          {loading ? "Updating..." : "Update Profile"}
-        </button>
+        </div>
 
-      </form>
-
+      </div>
     </div>
   )
 }
+

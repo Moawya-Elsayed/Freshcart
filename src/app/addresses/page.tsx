@@ -7,7 +7,8 @@ import { deleteAddress } from "@/AddressActions/deleteAddress.action"
 import { toast } from "sonner"
 import { Button } from "@/components/ui/button"
 import { useRouter } from "next/navigation"
-import { MdLocationOn, MdPhone, MdLocationCity, MdArrowBack } from "react-icons/md"
+import { MdLocationOn, MdPhone, MdLocationCity } from "react-icons/md"
+import Link from "next/link"
 interface Address {
   _id: string
   name: string
@@ -19,7 +20,7 @@ export default function Addresses() {
   
   const [addresses, setAddresses] = useState<Address[]>([])
   const [isLoading, setIsLoading] = useState(true)
-    const router = useRouter()
+  useRouter()
   
   async function fetchAddresses() {
     setIsLoading(true)
@@ -56,7 +57,24 @@ export default function Addresses() {
     city: formData.get("city") as string,
   }
 
-  const res = await addAddress(body)
+  // Check if address already exists
+    const isExist = addresses.some(
+      (addr) =>
+        addr.name === body.name &&
+        addr.details === body.details &&
+        addr.phone === body.phone &&
+        addr.city === body.city
+    )
+
+    if (isExist) {
+      toast.error("Address already exists", {
+        duration: 2000,
+        position: "top-center",
+      })
+      return
+    }
+
+    const res = await addAddress(body)
 
   if (res.status === "success") {
     toast.success("Address added successfully", {
@@ -94,7 +112,7 @@ export default function Addresses() {
     }
   }
 
-  if (isLoading) return         
+  if (isLoading) return (        
                                 <div className="min-h-[60vh] flex items-center justify-center">
                                     <div className="sk-chase scale-125">
                                         <div className="sk-chase-dot"></div>
@@ -105,22 +123,20 @@ export default function Addresses() {
                                         <div className="sk-chase-dot"></div>
                                     </div>
                                 </div>
+  )
 
   return (
    
 
-    <div className="w-[95%] md:w-[80%] lg:w-[60%] mx-auto py-12">
+    <div className="w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8  py-12">
 
-        <div className="flex items-center justify-between mb-10">
-            <button
-            onClick={() => router.back()}
-            className="flex items-center gap-2 text-emerald-500 hover:text-emerald-600 transition font-medium"
-            >
-              <MdArrowBack />
-              Go Back
-            </button>
+        <div className="flex flex-col sm:flex-row
+          items-start sm:items-center
+          justify-between
+          gap-4 mb-10">
 
-            <h2 className="text-3xl font-bold text-emerald-600">
+
+            <h2 className="text-3xl font-bold text-center text-emerald-600">
             My Addresses
             </h2>
         </div>
@@ -176,60 +192,64 @@ export default function Addresses() {
             </Button>
         </form>
 
-        {/* Address List */}
         <div className="grid gap-6">
-            {addresses.map((address) => (
-            <div  
-                key={address._id}
-                className="bg-white dark:bg-[#0f172a]
-                border dark:border-gray-800
-                rounded-2xl shadow-lg
-                p-6
-                hover:shadow-2xl hover:-translate-y-1
-                transition duration-300
-                flex flex-col md:flex-row
-                justify-between md:items-center gap-6"
-            >
-                <div className="space-y-2">
-                <h3 className="font-bold text-lg text-emerald-600">
-                    {address.name}
-                </h3>
+          {addresses.map((address) => (
+          <div
+              key={address._id}
+              className="
+              w-full
+              bg-white dark:bg-[#0f172a]
+              border dark:border-gray-800
+              rounded-2xl shadow-lg
+              p-6
+              hover:shadow-2xl hover:-translate-y-1
+              transition duration-300
+              flex flex-col md:flex-row
+              items-start
+              justify-between
+              gap-6
+              "
+          >
 
-              <p className="flex items-center gap-2 text-gray-600 dark:text-gray-400">
-                <MdLocationOn className="text-emerald-500" />
-                {address.details}
-              </p>
+          <div className="space-y-2 w-full">
+          <h3 className="font-bold text-lg text-emerald-600 text-center sm:text-left">
+              {address.name}
+          </h3>
 
+          <p className="flex items-center gap-2 text-gray-600 dark:text-gray-400">
+          <MdLocationOn className="text-emerald-500" />
+          {address.details}
+          </p>
 
-              <p className="flex items-center gap-2">
-                <MdPhone className="text-emerald-500" />
-                {address.phone}
-              </p>
+          <p className="flex items-center gap-2">
+          <MdPhone className="text-emerald-500" />
+          {address.phone}
+          </p>
 
-              <p className="flex items-center gap-2">
-                <MdLocationCity className="text-emerald-500" />
-                {address.city}
-              </p>
+          <p className="flex items-center gap-2">
+          <MdLocationCity className="text-emerald-500" />
+          {address.city}
+          </p>
+          </div>
 
-                </div>
+          <div className="flex flex-col sm:flex-row gap-3 w-full md:w-auto">
+          <Link href={`/addresses/${address._id}`}>
+          <Button className="bg-blue-500 hover:bg-blue-600 text-white rounded-xl w-full sm:w-auto">
+          View Details
+          </Button>
+          </Link>
 
-                <div className="flex gap-3">
-                {/* <Link href={`/profile/addresses/${address._id}`}>
-                    <Button className="bg-blue-500 hover:bg-blue-600 text-white rounded-xl">
-                    View Details
-                    </Button>
-                </Link> */}
+          <Button
+          onClick={() => handleDelete(address._id)}
+          className="bg-red-500 hover:bg-red-600 text-white rounded-xl w-full sm:w-auto"
+          >
+          Delete
+          </Button>
+          </div>
 
-                <Button
-                    onClick={() => handleDelete(address._id)}
-                    className="bg-red-500 hover:bg-red-600 text-white rounded-xl"
-                >
-                    Delete
-                </Button>
-                </div>
-            </div>
-            ))}
-        </div>
+          </div>
+          ))}
+          </div>
     </div>
   )
 }

@@ -18,6 +18,6 @@ export async function getUserAddresses() {
     const payload = await res.json()
     return payload
   } catch (error) {
-    return error
+    throw error
   }
 }

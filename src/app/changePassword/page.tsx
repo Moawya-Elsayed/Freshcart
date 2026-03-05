@@ -88,7 +88,7 @@ export default function SecurityPage() {
   }
 
   return (
-    <div className="container mx-auto max-w-3xl mt-24 p-6">
+    <div className="container mx-auto max-w-3xl p-6">
 
       {/* ===== Title ===== */}
       <div className="flex items-center gap-3 mb-8">

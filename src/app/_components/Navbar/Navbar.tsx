@@ -3,7 +3,7 @@
   import Link from "next/link"
   import { useContext, useEffect, useState , useRef } from "react"
   import { usePathname } from "next/navigation"
-  import {FaCartPlus,FaFacebook,FaInstagram,FaLinkedin,FaTiktok,FaTwitter,FaYoutube,FaSignOutAlt,FaHeart,FaMoon,FaSun , FaUserCircle  , FaBoxOpen , FaChevronDown, FaShieldAlt} from "react-icons/fa"
+  import {FaCartPlus,FaFacebook,FaInstagram,FaLinkedin,FaTiktok,FaTwitter,FaYoutube,FaSignOutAlt,FaHeart,FaMoon,FaSun , FaUserCircle  , FaBoxOpen , FaChevronDown , FaAddressCard} from "react-icons/fa"
   import { HiMenu, HiX } from "react-icons/hi"
   import { useSession, signOut } from "next-auth/react"
   import { CartContext } from "@/context/CartContext"
@@ -190,7 +190,7 @@ import Image from "next/image"
                     />
                   </button>
 
-                  {/* Dropdown */}
+                  {/*========================== Dropdown ==========================*/}
                   <div
                     className={`absolute right-0 mt-3 w-64 z-50 bg-white text-gray-800 dark:bg-[#111827] dark:text-white]
                     border border-gray-200 dark:border-gray-800
@@ -217,7 +217,7 @@ import Image from "next/image"
                     <div className="p-2 text-sm">
 
                       <Link
-                        href="/profile/addresses"
+                        href="/profile"
                         className="flex items-center gap-3 px-3 py-2 rounded-lg
                         hover:bg-emerald-100 dark:hover:bg-gray-800 transition dark:text-white"
                       >
@@ -235,12 +235,13 @@ import Image from "next/image"
                       </Link>
 
                       <Link
-                        href="/profile/security"
+                        href="/addresses"
                         className="flex items-center gap-3 px-3 py-2 rounded-lg
                         hover:bg-emerald-100 dark:hover:bg-gray-800 transition dark:text-white"
                       >
-                        <FaShieldAlt className="text-indigo-500" />
-                        Security
+                        
+                        <FaAddressCard className="text-emerald-500" />
+                          My Addresses
                       </Link>
 
                       <div className="my-2 border-t border-gray-200 dark:border-gray-800" />
@@ -385,7 +386,7 @@ import Image from "next/image"
                <div className="flex flex-col gap-2 mb-4">
 
                 <Link
-                  href="/profile/addresses"
+                  href="/profile"
                   onClick={() => setOpen(false)}
                   className="flex items-center gap-3 px-3 py-2 rounded-lg
                   hover:bg-emerald-100 dark:hover:bg-gray-700
@@ -407,14 +408,14 @@ import Image from "next/image"
                 </Link>
 
                 <Link
-                  href="/profile/security"
+                  href="/addresses"
                   onClick={() => setOpen(false)}
                   className="flex items-center gap-3 px-3 py-2 rounded-lg
                   hover:bg-emerald-100 dark:hover:bg-gray-700
                   transition"
                 >
-                  <FaShieldAlt className="text-indigo-500" />
-                  <span>Security</span>
+                  <FaAddressCard className="text-indigo-500" />
+                  <span> My Addresses</span>
                 </Link>
 
               </div>
