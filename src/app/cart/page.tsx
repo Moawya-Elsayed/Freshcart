@@ -14,7 +14,7 @@
           import { FaSpinner } from "react-icons/fa6";
           import Link from "next/link"  
           import { useRouter } from "next/navigation"
-import Image from "next/image"
+          import Image from "next/image"
 
 
           export default function Carts() {
@@ -25,6 +25,7 @@ import Image from "next/image"
             const [removingId, setRemovingId] = useState("")
             const [couponName, setCouponName] = useState("")
             const [totalPrice, setTotalPrice] = useState(0)
+            const [discountedTotal, setDiscountedTotal] = useState(0)
             const {numberOfItems, setNumberOfItems} = useContext(CartContext)!
             const [cartId, setCartId] = useState("");
             const [paymentMethod, setPaymentMethod] = useState<"card" | "cash">("card")
@@ -39,6 +40,7 @@ import Image from "next/image"
               if (res.status === "success") {
                 setProducts(res.data.products)
                 setTotalPrice(res.data.totalCartPrice)
+                setNumberOfItems(res.numOfCartItems) 
               }
 
               setIsLoading(false)
@@ -103,13 +105,6 @@ import Image from "next/image"
                 setTotalPrice(res.data.totalCartPrice)
                 setNumberOfItems(res.numOfCartItems)
 
-                let sum = 0
-                res.data.products.forEach((product : ProductCartType) => {
-                  sum += product.count
-                })
-
-                setNumberOfItems(sum)
-
               } else {
                 toast.error("Product quantity can't be updated", {
                   duration: 2000,
@@ -154,7 +149,7 @@ import Image from "next/image"
                 })
 
                 setProducts(res.data.products)
-                // setDiscountedTotal(res.data.totalPrice)
+                setDiscountedTotal(res.data.totalPrice)
                 setTotalPrice(res.data.totalPrice)
 
               } else {

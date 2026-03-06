@@ -10,13 +10,14 @@ export async function middleware(request: NextRequest) {
 
   const { pathname } = request.nextUrl;
 
- const protectedRoutes = [
+const protectedRoutes = [
   "/cart",
   "/wishlist",
   "/checkout",
   "/profile",
-  "/orders" ,
-  "/profile/security"
+  "/profile/edit",
+  "/allorders",
+  "/changePassword"
 ];
 
   const authRoutes = ["/login", "/register"];
@@ -46,8 +47,9 @@ export const config = {
     "/cart/:path*",
     "/wishlist/:path*",
     "/checkout/:path*",
-    "/orders/:path*",
+    "/allorders/:path*",
     "/profile/:path*",
+    "/changePassword",
     "/login",
     "/register"
   ]
