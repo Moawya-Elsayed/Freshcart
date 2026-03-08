@@ -55,14 +55,14 @@
                     </div>
                 </div>
 
-                <div className="container w-[95%] sm:w-[90%] md:w-[85%] lg:w-[80%] mx-auto mt-12 px-4">
-                    <h2 className="my-7  text-emerald-500 text-3xl font-bold mb-8">
+                <div className="mt-12">
+                    <h2 className="my-7 text-emerald-500 text-3xl font-bold mb-8">
                         Related <span className="text-emerald-500">Products</span>
                     </h2>
 
-                    <div className="flex flex-wrap">
+                    <div className="flex flex-wrap -mx-3">
                         {res.data?.map((prod: Product) => (
-                            <SingleProduct product={prod} key={prod.id} />
+                            <SingleProduct key={prod._id} product={prod} />
                         ))}
                     </div>
                 </div>
