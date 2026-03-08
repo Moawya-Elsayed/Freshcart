@@ -95,9 +95,9 @@ export default function WishlistPage() {
           <div
   key={product._id}
   className="w-full sm:w-[48%] md:w-[32%] lg:w-[23%] px-3 mb-6 group relative overflow-hidden 
-             bg-white/80 dark:bg-[#0f172a]/80 backdrop-blur-xl 
-             rounded-2xl shadow-lg hover:shadow-2xl hover:-translate-y-2 
-             transition-all duration-300 border border-gray-200 dark:border-gray-800"
+          bg-white/80 dark:bg-[#0f172a]/80 backdrop-blur-xl 
+            rounded-2xl shadow-lg hover:shadow-2xl hover:-translate-y-2 
+            transition-all duration-300 border border-gray-200 dark:border-gray-800"
 >
             <div className="relative overflow-hidden">
               <Image
