@@ -55,7 +55,7 @@
                     </div>
                 </div>
 
-                <div className="container mx-auto mt-12 px-4">
+                <div className="container w-[95%] sm:w-[90%] md:w-[85%] lg:w-[80%] mx-auto mt-12 px-4">
                     <h2 className="my-7  text-emerald-500 text-3xl font-bold mb-8">
                         Related <span className="text-emerald-500">Products</span>
                     </h2>
