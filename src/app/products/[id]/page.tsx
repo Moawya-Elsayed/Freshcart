@@ -64,7 +64,7 @@
                         {res.data?.map((prod: Product) => (
                             <SingleProduct key={prod._id} product={prod} />
                         ))}
-                    </div>
+                    </div>  
                 </div>
                                 
                 <ProductReviews productId={data._id} />
