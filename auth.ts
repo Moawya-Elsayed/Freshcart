@@ -49,18 +49,10 @@
         ],
 
         callbacks: {
-          // async jwt({ token, user }) {
-          //   if (user) {
-          //     token.user = user.user ;
-          //     token.token = user.token;
-          //     token.id = user.id;   
-          //   }
-          //   return token;
-          // }  , 
+
 
           async jwt({ token, user, trigger, session }) {
 
-  // أول تسجيل دخول
   if (user) {
     token.user = {
       ...user.user,
@@ -69,7 +61,6 @@
     token.id = user.id;
   }
 
-  // لما نعمل session.update()
   if (trigger === "update" && session?.user) {
     token.user = {
       ...token.user,

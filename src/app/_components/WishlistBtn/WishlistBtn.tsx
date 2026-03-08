@@ -1,13 +1,15 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { Button } from "@/components/ui/button";
 import { Heart } from "lucide-react";
 import { toast } from "sonner";
 import { addToWishlist } from "@/WishlistActions/addProductWishlist.action";
 import { getWishlist } from "@/WishlistActions/getWishlist.action";
 import { removeFromWishlist } from "@/WishlistActions/removeProductWishlist.action";
-import { ButtonHTMLAttributes, ReactNode } from "react";
+import { ButtonHTMLAttributes, ReactNode  } from "react";
+import { WishlistContext } from "@/context/WishlistContext";
+// import { WishlistContext } from "@/context/WishlistContext"
 
 interface WishlistBtnProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   id: string;
@@ -17,6 +19,12 @@ interface WishlistBtnProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 export default function WishlistBtn({id}: WishlistBtnProps) {
   const [loading, setLoading] = useState(false);
   const [added, setAdded] = useState(false);
+  
+
+  const wishlistContext = useContext(WishlistContext)
+
+  // const wishlistCount = wishlistContext?.wishlistCount ?? 0
+  const setWishlistCount = wishlistContext?.setWishlistCount
 
 
   useEffect(() => {
@@ -42,6 +50,8 @@ export default function WishlistBtn({id}: WishlistBtnProps) {
         const res = await addToWishlist(id);
         if (res.status === "success") {
           setAdded(true);
+          // setWishlistCount(wishlistCount + 1)
+          setWishlistCount?.((prev) => prev + 1)
           toast.success(res.message, { duration: 2000, position: "top-center" });
         } else {
           toast.error("Can't add to wishlist now", { duration: 2000, position: "top-center" });
@@ -50,6 +60,8 @@ export default function WishlistBtn({id}: WishlistBtnProps) {
         const res = await removeFromWishlist(id);
         if (res.status === "success") {
           setAdded(false);
+          // setWishlistCount(wishlistCount - 1)
+          setWishlistCount?.((prev) => prev - 1)
           toast.success(res.message, { duration: 2000, position: "top-center" });
         } else {
           toast.error("Can't remove from wishlist now", { duration: 2000, position: "top-center" });

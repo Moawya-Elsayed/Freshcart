@@ -19,10 +19,9 @@
 
         if(!data) return <h1>No Product details here</h1>
         const res = await getRelatedProducts(data.category._id)
-        console.log(res.data);
         
 
-           if (!data) {
+        if (!data) {
             return <div className="text-center py-20">Product not found</div>
             }
         return (

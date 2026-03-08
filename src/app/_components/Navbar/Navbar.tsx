@@ -8,7 +8,8 @@
   import { useSession, signOut } from "next-auth/react"
   import { CartContext } from "@/context/CartContext"
   import { useTheme } from "next-themes"
-import Image from "next/image"
+  import Image from "next/image"
+  import { WishlistContext } from "@/context/WishlistContext"
 
   export default function Navbar() {
 
@@ -24,6 +25,7 @@ import Image from "next/image"
     const [userMenuOpen, setUserMenuOpen] = useState(false)
 
     const menuRef = useRef<HTMLDivElement>(null)
+    const { wishlistCount } = useContext(WishlistContext)!
 
     useEffect(() => {
       function flag(){
@@ -112,8 +114,13 @@ import Image from "next/image"
 
               {session && (
                 <>
-                  <Link href="/wishlist" className="text-xl hover:text-red-400 transition">
+                  <Link href="/wishlist" className="relative text-xl hover:text-red-400 transition">
                     <FaHeart />
+                    {wishlistCount > 0 && (
+                      <span className="absolute -top-3 -right-3 bg-red-500 text-white text-xs w-5 h-5 flex items-center justify-center rounded-full">
+                        {wishlistCount}
+                      </span>
+                    )}
                   </Link>
 
                   <Link href="/cart" className="relative text-xl hover:text-yellow-400 transition">
@@ -313,30 +320,76 @@ import Image from "next/image"
             {session && (
               <>
                 <Link href="/wishlist" onClick={() => setOpen(false)}>
-                  <li className="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-emerald-50 dark:hover:bg-gray-800 hover:text-emerald-600">
-                    <FaHeart />
-                    Wishlist
-                  </li>
+                  {/* <li className="flex items-center justify-between px-3 py-2 rounded-lg hover:bg-emerald-50 dark:hover:bg-gray-800 hover:text-emerald-600"> */}
+                      <li
+                        className={`flex items-center justify-between px-3 py-2 rounded-xl
+                        transition-all duration-200 hover:translate-x-1
+                        ${
+                          pathname === "/wishlist"
+                            ? "bg-emerald-100 text-emerald-600 dark:bg-gray-800"
+                            : "hover:bg-emerald-50 dark:hover:bg-gray-800"
+                        }`}
+                      >
+                      <div className="flex items-center gap-2">
+                        <div className="w-8 h-8 flex items-center justify-center rounded-lg bg-emerald-100 dark:bg-gray-800">
+                          <FaHeart className="text-emerald-600 dark:text-emerald-400" />
+                        </div>
+                        <span>Wishlist</span>
+                      </div>
+                      {wishlistCount > 0 && (
+                        <span className="bg-red-500 text-white text-xs  font-semibold shadow-sm w-5 h-5 px-1 flex items-center justify-center rounded-full">
+                          {wishlistCount}
+                        </span>
+                      )}
+                    </li>
                 </Link>
 
                 <Link href="/cart" onClick={() => setOpen(false)}>
-                  <li className="flex items-center justify-between px-3 py-2 rounded-lg hover:bg-emerald-50 dark:hover:bg-gray-800 hover:text-emerald-600">
+                  {/* <li className="flex items-center justify-between px-3 py-2 rounded-lg hover:bg-emerald-50 dark:hover:bg-gray-800  transition-all duration-200 hover:translate-x-1 hover:text-emerald-600"> */}
+                    <li
+                      className={`flex items-center justify-between px-3 py-2 rounded-xl
+                      transition-all duration-200 hover:translate-x-1
+                      ${
+                        pathname === "/cart"
+                          ? "bg-emerald-100 text-emerald-600 dark:bg-gray-800"
+                          : "hover:bg-emerald-50 dark:hover:bg-gray-800"
+                      }`}
+                    >
                     <div className="flex items-center gap-2">
-                      <FaCartPlus />
+                      {/* <FaCartPlus /> */}
+                      <div className="w-8 h-8 flex items-center justify-center rounded-lg bg-emerald-100 dark:bg-gray-800">
+                        <FaCartPlus className="text-emerald-600 dark:text-emerald-400" />
+                      </div>
                       <span>Cart</span>
                     </div>
-
                     {numberOfItems > 0 && (
-                      <span className="bg-red-500 text-white text-xs min-w-5 h-5 px-1 flex items-center justify-center rounded-full">
+                      <span className="bg-red-500 text-white text-xs  font-semibold shadow-sm w-5 h-5 px-1 flex items-center justify-center rounded-full">
                         {numberOfItems}
                       </span>
                     )}
                   </li>
+
                 </Link>
               </>
             )}
 
-            {links.map(link => (
+            {!session && (
+                <>
+                <Link href="/login" onClick={() => setOpen(false)}>
+                <li className="px-3 py-2 rounded-lg hover:bg-emerald-50 dark:hover:bg-gray-800">
+                Login
+                </li>
+                </Link>
+
+                <Link href="/register" onClick={() => setOpen(false)}>
+                <li className="px-3 py-2 rounded-lg bg-emerald-600 text-white rounded-lg text-center">
+                Register
+                </li>
+                </Link>
+                </>
+            )}
+
+            {/* {links.map(link => (
               <li key={link.name}>
                 <Link
                   href={link.href}
@@ -346,6 +399,27 @@ import Image from "next/image"
                   {link.name}
                 </Link>
               </li>
+            ))} */}
+
+            {links.map(link => (
+                <li key={link.name}>
+                  <Link
+                    href={link.href}
+                    onClick={() => setOpen(false)}
+                    className={`block px-3 py-2 rounded-xl
+                    transition-all duration-200
+                    hover:bg-emerald-50 dark:hover:bg-gray-800
+                    hover:text-emerald-600
+                    hover:translate-x-1 hover:scale-[1.02]
+                    ${
+                      pathname === link.href
+                        ? "bg-emerald-100 text-emerald-600 dark:bg-gray-800"
+                        : ""
+                    }`}
+                  >
+                    {link.name}
+                  </Link>
+                </li>
             ))}
 
           </ul>

@@ -9,7 +9,7 @@
 
     return (
       <>
-              <div className="container w-[95%] sm:w-[90%] md:w-[85%] lg:w-[80%] mx-auto  bg-gray-100 dark:bg-[#020617]">
+            <div className="container w-[95%] sm:w-[90%] md:w-[85%] lg:w-[80%] mx-auto py-10 bg-gray-100 dark:bg-[#020617]">
               <h1 className="text-3xl font-bold mb-6 text-emerald-600  text-center">Products Page</h1>
 
               <div className="flex flex-wrap -mx-3">
@@ -23,7 +23,7 @@
               })}
 
               
-              </div>
+              </div>  
           </div>
           
       </>

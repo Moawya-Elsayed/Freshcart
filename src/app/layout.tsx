@@ -7,6 +7,7 @@
   import MySessionProvider  from "../MySessionProvider/MySessionProvider"
   import { CartContextProvider } from "@/context/CartContext";
   import { ThemeProvider } from "next-themes";
+import { WishlistContextProvider } from "@/context/WishlistContext";
 
   const interSans = Inter({
     variable: "--font-sans",
@@ -42,15 +43,20 @@
           
           <ThemeProvider  attribute="class" defaultTheme="light" enableSystem>
             
-            <MySessionProvider>
+          <MySessionProvider>
             <CartContextProvider>
-              <Navbar/>
-              {/* {children} */}
-              <main className="flex-1">
+              <WishlistContextProvider>
+
+                <Navbar/>
+
+                <main className="flex-1">
                   {children}
                 </main>
-              <Footer/>
-              <Toaster/>  
+
+                <Footer/>
+                <Toaster/>
+
+              </WishlistContextProvider>
             </CartContextProvider>
           </MySessionProvider>
 

@@ -8,7 +8,6 @@ export default async function CategoriesSlider() {
         { cache: "no-store" }
     )
     const {data} = await res.json()
-    console.log(data);
     
     return <>
             
