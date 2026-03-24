@@ -18,7 +18,10 @@
         const data = await getProductDetails(id);
 
         if(!data) return <h1>No Product details here</h1>
-        const res = await getRelatedProducts(data.category._id)
+        // const res = await getRelatedProducts(data.category._id)
+        const res = data?.category?._id
+        ? await getRelatedProducts(data.category._id)
+        : { data: [] }
         
 
         if (!data) {
@@ -67,7 +70,8 @@
                     </div>  
                 </div>
                                 
-                <ProductReviews productId={data._id} />
+                {/* <ProductReviews productId={data._id} /> */}
+                {data?._id && <ProductReviews productId={data._id} />}
             </div>
 
             

@@ -32,11 +32,18 @@ export default function ProductReviews({ productId }: { productId: string }) {
 
       const res : ReviewsResponse  = await getProductReviews(productId)
 
-      const sorted = [...res.data].sort(
-  (a, b) =>
-    new Date(b.createdAt).getTime() -
-    new Date(a.createdAt).getTime()
-  )  
+  //     const sorted = [...res.data].sort(
+  // (a, b) =>
+  //   new Date(b.createdAt).getTime() -
+  //   new Date(a.createdAt).getTime()
+  // )  
+      const reviewsData = Array.isArray(res?.data) ? res.data : [];
+
+    const sorted = [...reviewsData].sort(
+      (a, b) =>
+        new Date(b.createdAt).getTime() -
+        new Date(a.createdAt).getTime()
+    )
 
       setReviews(sorted)
 
@@ -50,10 +57,6 @@ export default function ProductReviews({ productId }: { productId: string }) {
     }
   } , [productId])
 
-  // useEffect(() => {
-  //   loadReviews()
-  // }, [productId])
-
   useEffect(() => {
   loadReviews()
 }, [loadReviews])
@@ -61,7 +64,8 @@ export default function ProductReviews({ productId }: { productId: string }) {
   const averageRating =
     reviews.length > 0
       ? (
-          reviews.reduce((acc, r) => acc + r.rating, 0) /
+          // reviews.reduce((acc, r) => acc + r.rating, 0) /
+          reviews.reduce((acc, r) => acc + Number(r.rating || 0), 0) /
           reviews.length
         ).toFixed(1)
       : "0.0"
@@ -258,11 +262,14 @@ export default function ProductReviews({ productId }: { productId: string }) {
                   </p>
                 </div>
 
-                <div className="flex">
-                  {[...Array(review.rating)].map((_, i) => (
-                    <FaStar key={i} className="text-yellow-500" />
-                  ))}
-                </div>
+              <div className="flex">
+                {[...Array(Math.floor(Number(review.rating) || 0))].map((_, i) => (
+                  <FaStar key={i} className="text-yellow-500" />
+                ))}
+              </div>
+
+
+
               </div>
 
               <p className="mt-3">{review.review}</p>

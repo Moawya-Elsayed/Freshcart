@@ -14,7 +14,8 @@ export default async function ReviewDetails({
 
   const review = await getReviewById(reviewId)
 
-  if (!review?.data) {
+  // if (!review?.data) {
+  if (!review || !review.data) {
     return <div className="p-20 text-center">Review not found</div>
   }
 

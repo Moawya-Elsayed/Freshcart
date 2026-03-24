@@ -9,7 +9,7 @@ export async function getMyToken() {
         return null 
     }
 
-    const token = await decode({ token: decodetoken , secret : process.env.AUTH_SECRET! })
+    const token = await decode({ token: decodetoken , secret : process.env.NEXTAUTH_SECRET! })
 
     
 

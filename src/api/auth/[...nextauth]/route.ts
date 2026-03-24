@@ -1,62 +1,62 @@
-/* eslint-disable */
+// /* eslint-disable */
 
-import NextAuth, { AuthOptions } from "next-auth";
-import Credentials from "next-auth/providers/credentials";
+// import NextAuth, { AuthOptions } from "next-auth";
+// import Credentials from "next-auth/providers/credentials";
 
-export const authOptions: AuthOptions = {
-  providers: [
-    Credentials({
-      name: "Credentials",
-      credentials: {
-        username: { label: "Username", type: "text" },
-        password: { label: "Password", type: "password" },
-      },
-      async authorize(credentials) {
-        try {
-          const res = await fetch(
-            "https://ecommerce.routemisr.com/api/v1/auth/signin",
-            {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({
-                email: credentials?.username,
-                password: credentials?.password,
-              }),
-            }
-          );
+// export const authOptions: AuthOptions = {
+//   providers: [
+//     Credentials({
+//       name: "Credentials",
+//       credentials: {
+//         username: { label: "Username", type: "text" },
+//         password: { label: "Password", type: "password" },
+//       },
+//       async authorize(credentials) {
+//         try {
+//           const res = await fetch(
+//             "https://ecommerce.routemisr.com/api/v1/auth/signin",
+//             {
+//               method: "POST",
+//               headers: { "Content-Type": "application/json" },
+//               body: JSON.stringify({
+//                 email: credentials?.username,
+//                 password: credentials?.password,
+//               }),
+//             }
+//           );
 
-          const user = await res.json();
+//           const user = await res.json();
 
-          if (res.ok && user.token) {
-            return user;
-          }
+//           if (res.ok && user.token) {
+//             return user;
+//           }
 
-          return null;
-        } catch (error) {
-          return null;
-        }
-      },
-    }),
-  ],
-  session: {
-    strategy: "jwt",
-  },
-  callbacks: {
-  async jwt({ token, user }) {
-    if (user) {
-      token.token = user.token; 
-    }
-    return token;
-  },
+//           return null;
+//         } catch (error) {
+//           return null;
+//         }
+//       },
+//     }),
+//   ],
+//   session: {
+//     strategy: "jwt",
+//   },
+//   callbacks: {
+//   async jwt({ token, user }) {
+//     if (user) {
+//       token.token = user.token; 
+//     }
+//     return token;
+//   },
 
-  async session({ session, token }) {
-    return session;
-  },
-},
-  secret: process.env.NEXTAUTH_SECRET,
-};
+//   async session({ session, token }) {
+//     return session;
+//   },
+// },
+//   secret: process.env.NEXTAUTH_SECRET,
+// };
 
-const handler = NextAuth(authOptions);
+// const handler = NextAuth(authOptions);
 
-export { handler as GET, handler as POST };
+// export { handler as GET, handler as POST };
 
